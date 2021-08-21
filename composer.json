@@ -1,0 +1,40 @@
+{
+    "name": "pharaonic/livewire-select2",
+    "description": "Simple way to handle the Select2 for livewire components.",
+    "keywords": [
+        "livewire select2",
+        "livewire select",
+        "livewire-select2",
+        "livewire",
+        "laravel"
+    ],
+    "homepage": "https://github.com/pharaonic/livewire-select2",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Moamen Eltouny (Raggi)",
+            "email": "raggi@raggitech.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "livewire/livewire": ">=2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pharaonic\\Livewire\\Select2\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pharaonic\\Livewire\\Select2\\Select2ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
