@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## 1.3.0 - Unreleased
+## 1.3.0 - 2026-10-23
 
 The first release for Livewire 1. Releases 1.0.0 to 1.2.0 were built for Livewire 2, so Composer never installs 1.3.0 in a Livewire 2 application.
 
