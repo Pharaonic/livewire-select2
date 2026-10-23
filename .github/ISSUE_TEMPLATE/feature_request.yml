@@ -1,0 +1,35 @@
+name: Feature request
+description: Propose a useful addition or improvement
+title: "[Feature]: "
+labels:
+  - "type: feature"
+  - "status: needs triage"
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What real problem are you trying to solve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current approach
+      description: How are you handling this today, if at all?
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest useful behavior or API you would like.
+    validations:
+      required: true
+
+  - type: textarea
+    id: api
+    attributes:
+      label: Public API considerations
+      description: If this changes public API, show a concise example and explain why it belongs in the public surface.
+      render: php

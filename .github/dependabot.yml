@@ -1,0 +1,49 @@
+# Dependabot only opens PRs against develop. Version lines (N.x) receive
+# tooling updates through the normal port flow, retested on their own PHP range.
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: "/"
+    target-branch: develop
+    labels:
+      - "area: dependencies"
+    schedule:
+      interval: weekly
+    groups:
+      development-dependencies:
+        dependency-type: development
+
+  - package-ecosystem: composer
+    directory: "/tools/pint"
+    target-branch: develop
+    labels:
+      - "area: dependencies"
+    schedule:
+      interval: weekly
+    groups:
+      pint:
+        patterns:
+          - "*"
+
+  - package-ecosystem: npm
+    directory: "/"
+    target-branch: develop
+    labels:
+      - "area: dependencies"
+    schedule:
+      interval: weekly
+    groups:
+      npm-development-dependencies:
+        dependency-type: development
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    target-branch: develop
+    labels:
+      - "area: dependencies"
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns:
+          - "*"

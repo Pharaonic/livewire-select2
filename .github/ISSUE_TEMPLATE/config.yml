@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: "https://pharaonic.dev/packages/livewire/select2"
+    about: Check the documentation before opening an issue.
+  - name: Security vulnerability
+    url: "https://github.com/Pharaonic/livewire-select2/security"
+    about: Do not report security vulnerabilities in public issues.

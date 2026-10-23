@@ -1,0 +1,156 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - develop
+      - "[0-9]*.x"
+  pull_request:
+    branches:
+      - develop
+      - "[0-9]*.x"
+  workflow_dispatch:
+
+concurrency:
+  group: "build-${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# The 1.x line follows Livewire 1, which only installs on PHP 7. Its matrix is
+# therefore fixed here instead of being read from a ">=8.A <8.B" constraint.
+jobs:
+  php:
+    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.os }} - ${{ matrix.dependencies }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php:
+          - "7.4"
+        laravel:
+          - "7"
+          - "8"
+        dependencies:
+          - lowest
+          - highest
+        os:
+          - ubuntu-latest
+          - windows-latest
+        include:
+          - laravel: "7"
+            constraints: "--with laravel/framework:^7.30 --with orchestra/testbench:^5.20"
+          - laravel: "8"
+            constraints: "--with laravel/framework:^8.75 --with orchestra/testbench:^6.25"
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: fileinfo, pdo_sqlite, sqlite3
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v4
+        with:
+          dependency-versions: ${{ matrix.dependencies }}
+          composer-options: ${{ matrix.constraints }}
+
+      # The audit is judged with the highest dependencies; lowest installs are old by definition.
+      - name: Check
+        if: matrix.os == 'ubuntu-latest' && matrix.laravel == '8' && matrix.dependencies == 'highest'
+        run: composer check
+
+      - name: Analyse
+        if: ${{ !(matrix.os == 'ubuntu-latest' && matrix.laravel == '8' && matrix.dependencies == 'highest') }}
+        run: composer analyse
+
+      - name: Run tests
+        if: ${{ !(matrix.os == 'ubuntu-latest' && matrix.laravel == '8' && matrix.dependencies == 'highest') }}
+        run: composer test
+
+      - name: Setup Node
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install browsers
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium firefox webkit
+
+      # Real Livewire 1 components, real browsers.
+      - name: Run browser tests
+        if: matrix.os == 'ubuntu-latest'
+        env:
+          FIXTURE_PHP: php
+          BROWSERS: chromium,firefox,webkit
+        run: npm run test:browser
+
+      - name: Upload browser traces
+        if: failure() && matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-laravel-${{ matrix.laravel }}-${{ matrix.dependencies }}
+          path: test-results/
+          retention-days: 7
+
+  # Pint cannot install on PHP 7.4; it formats the same sources from PHP 8.1.
+  format:
+    name: Pint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+          tools: composer:v2
+
+      - name: Install Pint
+        run: composer --working-dir=tools/pint update --no-interaction --no-progress
+
+      - name: Check formatting
+        run: composer format:check
+
+  javascript:
+    name: JavaScript
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      # dist/ is committed so Composer users need no Node build; it must match the sources.
+      - name: Verify the committed build
+        run: npm run build:check

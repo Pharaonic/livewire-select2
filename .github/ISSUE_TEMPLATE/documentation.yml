@@ -1,0 +1,25 @@
+name: Documentation issue
+description: Report missing, incorrect, or unclear documentation
+title: "[Docs]: "
+labels:
+  - "type: docs"
+  - "status: needs triage"
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Documentation page
+      description: Link to the affected page when possible.
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is unclear or incorrect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: improvement
+    attributes:
+      label: Suggested improvement
+      description: Explain what information would make the documentation clearer.
