@@ -89,6 +89,18 @@ test('fires a native change for wire:change once the value is written, and ignor
     assert.deepEqual(a.component.writes, [['country', '2', { live: true }]])
 })
 
+test('lets Select2 observe its select inside wire:ignore only', () => {
+    const page = setup(`<div wire:ignore><select id="a">${COUNTRIES}</select></div><div><select id="b">${COUNTRIES}</select></div>`)
+    const a = page.mount('#a')
+    const b = page.mount('#b')
+
+    a.element.appendChild(page.document.createElement('option'))
+    b.element.appendChild(page.document.createElement('option'))
+
+    assert.ok(a.$.data('select2')._observer.takeRecords().length > 0)
+    assert.equal(b.$.data('select2')._observer.takeRecords().length, 0)
+})
+
 test('fires wire:change for a select without a binding', async () => {
     const page = setup(`<select id="a" wire:change.prevent="picked">${COUNTRIES}</select>`)
     const { element, $ } = page.mount('#a')

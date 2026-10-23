@@ -23,7 +23,8 @@ export function component(data = {}) {
         set(path, value, options) {
             this.writes.push([path, value, options])
 
-            return Promise.resolve()
+            // Like the bridge, a deferred write settles only with a later request.
+            return options && options.live === false ? new Promise(() => {}) : Promise.resolve()
         },
         watch(path, callback) {
             watchers.push({ path, callback })
