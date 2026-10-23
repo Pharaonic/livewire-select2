@@ -77,7 +77,16 @@ export function createSelect2({ window, functions, modelBinding, assistant }) {
 
         withoutShorthandOverrides(element, () => $element.select2(options))
 
-        return { $element, instance: $element.data('select2') }
+        const instance = $element.data('select2')
+
+        // Outside wire:ignore, Livewire's morph rewrites the select and the Select2 markup.
+        // Select2's own observer would react to the half-done morph and throw; update()
+        // rebuilds the widget once the morph has finished instead.
+        if (element.closest('[wire\\:ignore]') === null && instance && instance._observer) {
+            instance._observer.disconnect()
+        }
+
+        return { $element, instance }
     }
 
     // Morphing a select outside wire:ignore removes the attributes and markup Select2 added.
@@ -183,10 +192,18 @@ export function createSelect2({ window, functions, modelBinding, assistant }) {
 
             const written = binding === null ? Promise.resolve() : write()
 
-            if (written !== null) {
-                written.then(notify, (error) => {
-                    window.console.error(`Select2 could not update "${binding.property}".`, error)
-                })
+            if (written === null) {
+                return
+            }
+
+            const failed = (error) => window.console.error(`Select2 could not update "${binding.property}".`, error)
+
+            if (binding !== null && !binding.live) {
+                // A deferred write settles with the next request, which wire:change is about to send.
+                written.catch(failed)
+                notify()
+            } else {
+                written.then(notify, failed)
             }
         })
 
