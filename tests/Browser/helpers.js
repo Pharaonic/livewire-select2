@@ -19,7 +19,7 @@ export async function pick(page, selectId, optionText) {
 }
 
 export async function settle(page) {
-    // Livewire 1 debounces messages by 5ms; wait for the request and the morph.
+    // Livewire debounces messages by 5ms; wait for the request and the morph.
     await page.waitForLoadState('networkidle')
     await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 20)))
 }

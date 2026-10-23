@@ -15,7 +15,7 @@ final class FixtureApplication
 {
     use CreatesApplication;
 
-    public const FIXTURES = ['select2', 'legacy', 'nested', 'modal', 'rows', 'dependent', 'templates', 'bundle'];
+    public const FIXTURES = ['select2', 'legacy', 'nested', 'modal', 'rows', 'dependent', 'templates', 'bundle', 'defer'];
 
     /**
      * @param  \Illuminate\Foundation\Application  $app
@@ -45,6 +45,7 @@ final class FixtureApplication
         Livewire::component('rows-demo', RowsDemo::class);
         Livewire::component('dependent-demo', DependentDemo::class);
         Livewire::component('templates-demo', TemplatesDemo::class);
+        Livewire::component('defer-demo', DeferDemo::class);
 
         Route::middleware('web')->group(function (): void {
             Route::get('/{fixture}', fn (string $fixture) => view('fixtures::page', ['fixture' => $fixture]))

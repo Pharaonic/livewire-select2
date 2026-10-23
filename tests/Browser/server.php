@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /*
  * Front controller for the browser suite: `php -S 127.0.0.1:8124 tests/Browser/server.php`.
- * It boots a Testbench application with Livewire 1, Livewire Assistant, this
+ * It boots a Testbench application with Livewire 2, Livewire Assistant, this
  * package, and the fixture components, and serves the few static files the
  * fixtures need.
  */
