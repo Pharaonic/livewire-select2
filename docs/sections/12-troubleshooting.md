@@ -32,6 +32,6 @@ Add `data-parent` to the select. It opens the dropdown in the closest `.modal`, 
 
 Remove a `data-component-id` that names the parent, or leave the attribute out: the closest component is used.
 
-### Composer refuses to install Livewire 1 or Laravel 7 or 8
+### Composer refuses to install or update Laravel 7, 8, 9, or 10
 
 Those releases have unfixed security advisories. See the warning in [Installation](#installation).

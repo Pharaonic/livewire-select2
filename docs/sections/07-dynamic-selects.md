@@ -59,14 +59,14 @@ public function updatedLevel()
 ```
 
 :::warning Key ignored blocks that come and go
-Livewire 1 compares siblings by position. When ignored blocks can appear or disappear next to each other, give each a unique `wire:key`.
+Without keys, Livewire compares siblings by position. When ignored blocks can appear or disappear next to each other, give each a unique `wire:key`.
 :::
 
 ### Nested Components and Many Selects
 
 Each select binds to the closest Livewire component around it. A select in a nested component writes to that component, never to the parent. Any number of selects can share a page.
 
-`data-component-id` binds a select to a specific component wherever it is. In a Livewire 1 view the id is `$this->id`. An empty value means the closest component.
+`data-component-id` binds a select to a specific component wherever it is. In a Livewire 2 view the id is `$this->id`. An empty value means the closest component.
 
 ### Selects You Add Yourself
 
@@ -77,6 +77,6 @@ Pharaonic.assistant.scan(container)     // mounts the selects in container
 Pharaonic.assistant.destroy(container)  // cleans them up
 ```
 
-### Turbolinks
+### Turbolinks and Turbo
 
-Widgets are cleaned up before Turbolinks caches a page and mounted again when it comes back.
+Livewire 2 works with Turbolinks and Turbo through Livewire's [`livewire-turbolinks`](https://github.com/livewire/turbolinks) adapter. Widgets are cleaned up before a page is cached and mounted again when it comes back.

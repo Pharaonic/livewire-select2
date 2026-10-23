@@ -28,6 +28,6 @@ Show an image beside each option without JavaScript, or name a template function
 The script ships prebuilt in the Composer package, or as an ES module for bundlers such as Vite.
 :::
 
-:::info Livewire 1 line
-This documentation covers the 1.x line, which supports Livewire 1. Each Livewire major gets its own line.
+:::info Livewire 2 line
+This documentation covers the 2.x line, which supports Livewire 2. Each Livewire major gets its own line. Coming from 1.2? See [Upgrading from 1.2](#upgrading).
 :::

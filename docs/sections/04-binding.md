@@ -13,9 +13,17 @@ The property comes from `wire:model` on the select, or from `data-property`. Whe
 
 Both accept a property name or a dot path (`address.city`, `rows.2.product`).
 
-### Modifiers on Livewire 1
+### Modifiers on Livewire 2
 
-Livewire 1 has no deferred updates, so every write is sent right away. `wire:model.lazy` and `wire:model.debounce.500ms` are accepted and behave like `wire:model`: a Select2 choice is a single change, so there is nothing to debounce.
+The modifiers mean what they mean in Livewire 2:
+
+| Attribute | The choice is sent |
+| --- | --- |
+| `wire:model` | right away |
+| `wire:model.defer` | with the component's next request, such as a `wire:click` |
+| `wire:model.lazy`, `wire:model.debounce.500ms` | right away: a Select2 choice is a single change, so there is nothing to wait for |
+
+`data-property` always sends right away.
 
 ### How Values Move
 
@@ -60,7 +68,7 @@ With `data-tags`, users can type new values. Values in the property that have no
 </div>
 ```
 
-Select2 itself never fires the native `change` event; the package fires one for selects that have `wire:change`. Change handlers you attach with jQuery receive that event too, so on these selects they run twice. An `updated` hook in the component needs no event at all:
+Select2 itself never fires the native `change` event; the package fires one for selects that have `wire:change`. With `wire:model.defer`, the deferred value travels in the `wire:change` request. Change handlers you attach with jQuery receive that event too, so on these selects they run twice. An `updated` hook in the component needs no event at all:
 
 ```php title="app/Http/Livewire/Order.php"
 public function updatedCountry($value)

@@ -9,4 +9,4 @@ buttons:
     icon: arrow-right
 ---
 
-Read the full documentation for installation, binding, shorthand attributes and Select2 options, templates and callbacks, dynamic and dependent selects, and examples.
+Read the full documentation for installation, binding, shorthand attributes and Select2 options, templates and callbacks, dynamic and dependent selects, upgrading from 1.2, and examples.

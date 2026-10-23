@@ -2,6 +2,7 @@
   - [Overview](#overview)
   - [Installation](#installation)
   - [Basic Usage](#basic-usage)
+  - [Upgrading from 1.2](#upgrading)
 - Usage
   - [Binding](#binding)
   - [Options](#options)
