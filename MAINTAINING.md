@@ -37,6 +37,7 @@ Versions are `N.minor.patch`, where `N` is the Livewire major. Releases 1.0.0 to
 - `dist/` is committed so Composer users need no Node build. Run `npm run build` after any change under `resources/js/` and commit the result; CI fails when `dist/` is out of date.
 - Shorthands exist only where Select2's own `data-*` attributes fall short: Select2 reads them as raw strings (`""` is false, `"false"` is true) and cannot take a selector for `dropdownParent`. Options Select2 reads correctly from `data-*` get no shorthand. Select2 also lets its `data-*` attributes override constructor options, so `data-tags`, which is a Select2 key too, is hidden while Select2 reads its options.
 - 1.x: every genuine Livewire 1 release requires PHP 7, so the line runs on PHP 7.4. Pint lives in `tools/pint` and runs on PHP 8.1. `livewire/livewire` 1.3.7 contains Livewire 2 code and is excluded. The advisory ignore list adds Livewire 1 (CVE-2024-47823 has no Livewire 1 fix) and `zbateson/mail-mime-parser`.
+- Outside `wire:ignore`, Select2's own `MutationObserver` is disconnected, so it cannot react to a half-done Livewire morph; `update()` rebuilds the widget after the morph.
 - The advisory ignore list covers the Laravel framework tree of the line, which no longer receives security fixes, following the Laravel DNA.
 
 ## Verification
