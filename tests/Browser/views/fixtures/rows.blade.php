@@ -1,0 +1,1 @@
+@livewire('rows-demo')
