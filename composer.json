@@ -24,16 +24,17 @@
     "source": "https://github.com/Pharaonic/livewire-select2"
   },
   "require": {
-    "php": ">=7.4 <8.0",
-    "illuminate/http": "^7.30 || ^8.75",
-    "illuminate/routing": "^7.30 || ^8.75",
-    "illuminate/support": "^7.30 || ^8.75",
-    "illuminate/view": "^7.30 || ^8.75",
-    "livewire/livewire": ">=1.3.0 <1.3.7 || >=1.3.8 <2.0",
-    "pharaonic/livewire-assistant": "^1.0"
+    "php": ">=8.0 <8.4",
+    "illuminate/http": "^7.30 || ^8.75 || ^9.0 || ^10.0",
+    "illuminate/routing": "^7.30 || ^8.75 || ^9.0 || ^10.0",
+    "illuminate/support": "^7.30 || ^8.75 || ^9.0 || ^10.0",
+    "illuminate/view": "^7.30 || ^8.75 || ^9.0 || ^10.0",
+    "livewire/livewire": "^2.12.7",
+    "pharaonic/livewire-assistant": "^2.0"
   },
   "require-dev": {
-    "orchestra/testbench": "^5.20 || ^6.25",
+    "laravel/pint": "^1.5",
+    "orchestra/testbench": "^5.20 || ^6.25 || ^7.0 || ^8.0",
     "pestphp/pest": "^1.23",
     "phpstan/phpstan": "^2.1",
     "phpunit/phpunit": "^9.6.33"
@@ -58,11 +59,12 @@
   "scripts": {
     "test": "@php vendor/bin/pest",
     "analyse": "@php vendor/bin/phpstan analyse --memory-limit=1G",
-    "format": "@php tools/pint/vendor/bin/pint",
-    "format:check": "@php tools/pint/vendor/bin/pint --test",
+    "format": "@php vendor/bin/pint",
+    "format:check": "@php vendor/bin/pint --test",
     "security": "@composer audit",
     "check": [
       "@composer validate --strict",
+      "@format:check",
       "@analyse",
       "@test",
       "@security"
@@ -79,11 +81,15 @@
       "advisories": {
         "block": false,
         "ignore": {
-          "laravel/framework": "No fixed release within Laravel 7 or 8; the application chooses the framework release.",
+          "laravel/framework": "No fixed release within Laravel 7, 8, 9, or 10; the application chooses the framework release.",
           "league/commonmark": "No fixed release within Laravel 7; the application chooses the framework release.",
           "league/flysystem": "No fixed release within Laravel 7 or 8; the application chooses the framework release.",
-          "livewire/livewire": "No fixed release within Livewire 1; the application chooses the Livewire release.",
-          "zbateson/mail-mime-parser": "Development only, through orchestra/testbench and spatie/laravel-ray; no fixed release runs on PHP 7.4."
+          "symfony/http-foundation": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
+          "symfony/mailer": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
+          "symfony/mime": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
+          "symfony/process": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
+          "symfony/routing": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
+          "symfony/yaml": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release."
         }
       }
     },

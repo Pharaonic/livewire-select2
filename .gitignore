@@ -8,8 +8,6 @@
 .vscode/
 .DS_Store
 Thumbs.db
-/tools/pint/vendor/
-/tools/pint/composer.lock
 /node_modules/
 /test-results/
 /playwright-report/

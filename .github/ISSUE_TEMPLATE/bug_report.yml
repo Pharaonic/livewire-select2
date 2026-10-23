@@ -34,7 +34,7 @@ body:
     id: package-version
     attributes:
       label: Package version
-      placeholder: "e.g. 1.0.0"
+      placeholder: "e.g. 2.0.0"
     validations:
       required: true
 
@@ -42,7 +42,7 @@ body:
     id: php-version
     attributes:
       label: PHP version
-      placeholder: "e.g. 8.1.34"
+      placeholder: "e.g. 8.2.28"
     validations:
       required: true
 
@@ -50,7 +50,7 @@ body:
     id: laravel-version
     attributes:
       label: Laravel version
-      placeholder: "e.g. 8.83.29"
+      placeholder: "e.g. 10.48.29"
     validations:
       required: true
 
@@ -58,7 +58,7 @@ body:
     id: livewire-version
     attributes:
       label: Livewire version
-      placeholder: "e.g. 1.3.8"
+      placeholder: "e.g. 2.12.8"
     validations:
       required: true
 

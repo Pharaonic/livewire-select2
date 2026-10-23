@@ -8,6 +8,7 @@ Each supported Livewire major has its own line. A line only uses syntax and APIs
 
 ```text
 1.x → Livewire 1
+2.x → Livewire 2
 ```
 
 Open fixes against the oldest affected line; maintainers port them to the other lines.

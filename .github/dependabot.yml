@@ -13,18 +13,6 @@ updates:
       development-dependencies:
         dependency-type: development
 
-  - package-ecosystem: composer
-    directory: "/tools/pint"
-    target-branch: develop
-    labels:
-      - "area: dependencies"
-    schedule:
-      interval: weekly
-    groups:
-      pint:
-        patterns:
-          - "*"
-
   - package-ecosystem: npm
     directory: "/"
     target-branch: develop

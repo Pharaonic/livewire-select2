@@ -18,33 +18,40 @@ concurrency:
 permissions:
   contents: read
 
-# The 1.x line follows Livewire 1, which only installs on PHP 7. Its matrix is
-# therefore fixed here instead of being read from a ">=8.A <8.B" constraint.
+# The 2.x line follows Livewire 2, which supports several Laravel majors. Each
+# major is listed with the PHP minors it supports, instead of reading one
+# ">=8.A <8.B" constraint.
 jobs:
   php:
-    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.os }} - ${{ matrix.dependencies }}
+    name: PHP ${{ matrix.pair.php }} - Laravel ${{ matrix.pair.laravel }} - ${{ matrix.os }} - ${{ matrix.dependencies }}
 
     strategy:
       fail-fast: false
       matrix:
-        php:
-          - "7.4"
-        laravel:
-          - "7"
-          - "8"
+        pair:
+          - { php: "8.0", laravel: "7", constraints: "--with laravel/framework:^7.30 --with orchestra/testbench:^5.20", browser: true }
+          - { php: "8.0", laravel: "8", constraints: "--with laravel/framework:^8.75 --with orchestra/testbench:^6.25", browser: true }
+          - { php: "8.1", laravel: "8", constraints: "--with laravel/framework:^8.75 --with orchestra/testbench:^6.25", browser: false }
+          - { php: "8.0", laravel: "9", constraints: "--with laravel/framework:^9.0 --with orchestra/testbench:^7.0", browser: true }
+          - { php: "8.1", laravel: "9", constraints: "--with laravel/framework:^9.0 --with orchestra/testbench:^7.0", browser: false }
+          - { php: "8.2", laravel: "9", constraints: "--with laravel/framework:^9.0 --with orchestra/testbench:^7.0", browser: false }
+          - { php: "8.1", laravel: "10", constraints: "--with laravel/framework:^10.0 --with orchestra/testbench:^8.0", browser: true }
+          - { php: "8.2", laravel: "10", constraints: "--with laravel/framework:^10.0 --with orchestra/testbench:^8.0", browser: false }
+          - { php: "8.3", laravel: "10", constraints: "--with laravel/framework:^10.0 --with orchestra/testbench:^8.0", browser: false }
         dependencies:
           - lowest
           - highest
         os:
           - ubuntu-latest
           - windows-latest
-        include:
-          - laravel: "7"
-            constraints: "--with laravel/framework:^7.30 --with orchestra/testbench:^5.20"
-          - laravel: "8"
-            constraints: "--with laravel/framework:^8.75 --with orchestra/testbench:^6.25"
 
     runs-on: ${{ matrix.os }}
+
+    # composer check runs once, on the lowest PHP with the highest dependencies:
+    # a newer PHP installs a newer Pint with extra rules.
+    env:
+      CHECK: ${{ matrix.os == 'ubuntu-latest' && matrix.pair.php == '8.0' && matrix.pair.laravel == '9' && matrix.dependencies == 'highest' }}
+      BROWSER: ${{ matrix.os == 'ubuntu-latest' && matrix.pair.browser }}
 
     steps:
       - name: Checkout
@@ -53,7 +60,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: ${{ matrix.pair.php }}
           extensions: fileinfo, pdo_sqlite, sqlite3
           coverage: none
           tools: composer:v2
@@ -62,71 +69,49 @@ jobs:
         uses: ramsey/composer-install@v4
         with:
           dependency-versions: ${{ matrix.dependencies }}
-          composer-options: ${{ matrix.constraints }}
+          composer-options: ${{ matrix.pair.constraints }}
 
-      # The audit is judged with the highest dependencies; lowest installs are old by definition.
       - name: Check
-        if: matrix.os == 'ubuntu-latest' && matrix.laravel == '8' && matrix.dependencies == 'highest'
+        if: env.CHECK == 'true'
         run: composer check
 
       - name: Analyse
-        if: ${{ !(matrix.os == 'ubuntu-latest' && matrix.laravel == '8' && matrix.dependencies == 'highest') }}
+        if: env.CHECK != 'true'
         run: composer analyse
 
       - name: Run tests
-        if: ${{ !(matrix.os == 'ubuntu-latest' && matrix.laravel == '8' && matrix.dependencies == 'highest') }}
+        if: env.CHECK != 'true'
         run: composer test
 
+      # The JavaScript is the same on every PHP, so the browser suite runs on the lowest PHP of each Laravel major.
       - name: Setup Node
-        if: matrix.os == 'ubuntu-latest'
+        if: env.BROWSER == 'true'
         uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
 
       - name: Install browsers
-        if: matrix.os == 'ubuntu-latest'
+        if: env.BROWSER == 'true'
         run: |
           npm ci
           npx playwright install --with-deps chromium firefox webkit
 
-      # Real Livewire 1 components, real browsers.
+      # Real Livewire 2 components, real browsers.
       - name: Run browser tests
-        if: matrix.os == 'ubuntu-latest'
+        if: env.BROWSER == 'true'
         env:
           FIXTURE_PHP: php
           BROWSERS: chromium,firefox,webkit
         run: npm run test:browser
 
       - name: Upload browser traces
-        if: failure() && matrix.os == 'ubuntu-latest'
+        if: failure() && env.BROWSER == 'true'
         uses: actions/upload-artifact@v7
         with:
-          name: playwright-laravel-${{ matrix.laravel }}-${{ matrix.dependencies }}
+          name: playwright-php-${{ matrix.pair.php }}-laravel-${{ matrix.pair.laravel }}-${{ matrix.dependencies }}
           path: test-results/
           retention-days: 7
-
-  # Pint cannot install on PHP 7.4; it formats the same sources from PHP 8.1.
-  format:
-    name: Pint
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.1"
-          coverage: none
-          tools: composer:v2
-
-      - name: Install Pint
-        run: composer --working-dir=tools/pint update --no-interaction --no-progress
-
-      - name: Check formatting
-        run: composer format:check
 
   javascript:
     name: JavaScript
