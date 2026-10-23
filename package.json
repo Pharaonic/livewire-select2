@@ -1,0 +1,29 @@
+{
+  "name": "@pharaonic/livewire-select2",
+  "private": true,
+  "description": "Build and test tooling for the pharaonic/livewire-select2 Composer package.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "build:check": "node build.js --check",
+    "lint": "eslint .",
+    "test": "node --test tests/js/",
+    "test:browser": "playwright test",
+    "check": "npm run lint && npm run test && npm run build:check && npm run test:browser"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "esbuild": "0.28.2",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
+    "happy-dom": "21.0.3",
+    "jquery": "4.0.0",
+    "select2": "4.1.0",
+    "turbolinks": "5.2.0"
+  }
+}
