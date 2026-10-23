@@ -89,6 +89,19 @@ test('fires a native change for wire:change once the value is written, and ignor
     assert.deepEqual(a.component.writes, [['country', '2', { live: true }]])
 })
 
+test('writes wire:model.defer as a deferred update, and still fires wire:change after it', async () => {
+    const page = setup(`<select id="a" wire:model.defer="country" wire:change="countryChanged">${COUNTRIES}</select>`, { modelBinding })
+    const { element, $, component: bound } = page.mount('#a', { bound: component({ country: '1' }) })
+    let native = 0
+
+    element.addEventListener('change', () => native++)
+    $.val('2').trigger('change')
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    assert.deepEqual(bound.writes, [['country', '2', { live: false }]])
+    assert.equal(native, 1)
+})
+
 test('lets Select2 observe its select inside wire:ignore only', () => {
     const page = setup(`<div wire:ignore><select id="a">${COUNTRIES}</select></div><div><select id="b">${COUNTRIES}</select></div>`)
     const a = page.mount('#a')

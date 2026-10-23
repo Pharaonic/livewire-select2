@@ -166,13 +166,14 @@ test('reports each missing function once', () => {
     assert.deepEqual(missing, ['flag', 'match'])
 })
 
-test('reads wire:model with Livewire 1 semantics: always live', () => {
-    const page = setup('<select id="a" wire:model="country"></select><select id="b" wire:model.lazy="a.b"></select><select id="c" wire:model.debounce.500ms="c"></select><select id="d" wire:model=" "></select><select id="e"></select>')
+test('reads wire:model with Livewire 2 semantics: live unless deferred', () => {
+    const page = setup('<select id="a" wire:model="country"></select><select id="b" wire:model.lazy="a.b"></select><select id="c" wire:model.debounce.500ms="c"></select><select id="d" wire:model=" "></select><select id="e"></select><select id="f" wire:model.defer="f"></select>')
     const binding = (id) => modelBinding(page.document.getElementById(id))
 
     assert.deepEqual(binding('a'), { property: 'country', live: true })
     assert.deepEqual(binding('b'), { property: 'a.b', live: true })
     assert.deepEqual(binding('c'), { property: 'c', live: true })
+    assert.deepEqual(binding('f'), { property: 'f', live: false })
     assert.equal(binding('d'), null)
     assert.equal(binding('e'), null)
 })

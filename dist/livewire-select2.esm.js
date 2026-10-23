@@ -80,7 +80,7 @@ function readModel(element) {
 // resources/js/livewire.js
 function modelBinding(element) {
   const model = readModel(element);
-  return model === null ? null : { property: model.property, live: true };
+  return model === null ? null : { property: model.property, live: !model.modifiers.includes("defer") };
 }
 
 // resources/js/options.js
