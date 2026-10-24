@@ -1,5 +1,9 @@
 ## Troubleshooting
 
+### A validation message does not show
+
+The `@error` is inside the `wire:ignore` block, which Livewire never updates. Move it outside, next to the block. See [Basic Usage](#basic-usage).
+
 ### Nothing happens and there is no widget
 
 Check the console. `select2-missing` means jQuery or Select2 is not on `window.jQuery`: load them, or with a bundler set `window.jQuery` and call `select2()` (see [Installation](#installation)). Make sure `@livewireSelect2Scripts` is on the page.
