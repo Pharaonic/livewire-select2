@@ -21,7 +21,7 @@
     "esbuild": "0.28.2",
     "eslint": "10.13.0",
     "globals": "17.13.0",
-    "happy-dom": "21.0.3",
+    "happy-dom": "21.0.4",
     "jquery": "4.0.0",
     "select2": "4.1.0",
     "turbolinks": "5.2.0"
