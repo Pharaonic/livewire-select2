@@ -72,7 +72,7 @@ Without keys, Livewire compares siblings by position. When ignored blocks can ap
 
 Each select binds to the closest Livewire component around it. A select in a nested component writes to that component, never to the parent. Any number of selects can share a page.
 
-`data-component-id` binds a select to a specific component wherever it is. In a Livewire 3 view the id is `$this->getId()`; `$this->id` does not exist on Livewire 3 components and fails the page. An empty value means the closest component.
+`data-component-id` binds a select to a specific component wherever it is. In a Livewire 4 view the id is `$this->getId()`; `$this->id` does not exist on Livewire 4 components and fails the page. An empty value means the closest component.
 
 ### Selects You Add Yourself
 

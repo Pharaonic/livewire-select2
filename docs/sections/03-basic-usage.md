@@ -45,7 +45,7 @@ class Profile extends Component
 </div>
 ```
 
-That is all. The first select shows Jordan; picking Egypt sets `$country` to `"1"` right away; `$this->country = '2'` on the server selects Jordan again. The second select holds an array, sent with the component's next request, because plain `wire:model` is deferred on Livewire 3. See [Binding](#binding).
+That is all. The first select shows Jordan; picking Egypt sets `$country` to `"1"` right away; `$this->country = '2'` on the server selects Jordan again. The second select holds an array, sent with the component's next request, because plain `wire:model` is deferred on Livewire 4. See [Binding](#binding).
 
 ### Why wire:ignore
 
@@ -63,7 +63,7 @@ A select can also live outside `wire:ignore`. The package then rebuilds the widg
 | `data-tags`, `data-clear`, `data-search-off`, `data-parent` | Shorthands for common Select2 options (see [Options](#options)) |
 | `data-placeholder` and other Select2 `data-*` attributes | Read by Select2 itself |
 | `data-options='{...}'` | A JSON object passed to Select2, for everything else |
-| `data-component-id` | Optional: bind to a specific component instead of the one around the select (`$this->getId()` in a Livewire 3 view) |
+| `data-component-id` | Optional: bind to a specific component instead of the one around the select (`$this->getId()` in a Livewire 4 view) |
 
 Without `wire:model` or `data-property`, the select becomes a Select2 widget that is not bound to anything.
 

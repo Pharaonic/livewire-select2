@@ -3,9 +3,9 @@
 <p align="center">
   <a href="https://php.net" target="_blank"><img src="https://img.shields.io/static/v1?label=PHP&message=8.1%20-%208.5&color=blue&style=flat-square" alt="PHP Version : 8.1 - 8.5"></a>
   <a href="https://laravel.com" target="_blank"><img src="https://img.shields.io/static/v1?label=Laravel&message=10.x%20-%2013.x&color=F05340&style=flat-square" alt="Laravel Version : 10.x - 13.x"></a>
-  <a href="https://laravel-livewire.com" target="_blank"><img src="https://img.shields.io/static/v1?label=Livewire&message=3.x&color=fb70a9&style=flat-square" alt="Livewire Version : 3.x"></a>
+  <a href="https://laravel-livewire.com" target="_blank"><img src="https://img.shields.io/static/v1?label=Livewire&message=4.x&color=fb70a9&style=flat-square" alt="Livewire Version : 4.x"></a>
   <img src="https://img.shields.io/static/v1?label=License&message=MIT&color=brightgreen&style=flat-square" alt="License">
-  <img src="https://github.com/Pharaonic/livewire-select2/actions/workflows/build.yml/badge.svg?branch=3.x" alt="Build">
+  <img src="https://github.com/Pharaonic/livewire-select2/actions/workflows/build.yml/badge.svg?branch=4.x" alt="Build">
   <br>
   <a href="https://packagist.org/packages/Pharaonic/livewire-select2" target="_blank"><img src="https://img.shields.io/static/v1?label=Packagist&message=pharaonic/livewire-select2&color=blue&logo=packagist&logoColor=white" alt="Source"></a>
   <a href="https://packagist.org/packages/pharaonic/livewire-select2" target="_blank"><img src="https://poser.pugx.org/pharaonic/livewire-select2/v" alt="Packagist Version"></a>
@@ -29,9 +29,9 @@ Load jQuery and Select2 as usual, then add the scripts once in your layout, befo
 @livewireSelect2Scripts
 ```
 
-No Node build is needed. The 3.x line supports Livewire 3.8.3+ on Laravel 10.15+, 11, 12, and 13 with PHP 8.1 to 8.5.
+No Node build is needed. The 4.x line supports Livewire 4.3.4+ on Laravel 10.16+, 11, 12, and 13 with PHP 8.1 to 8.5.
 
-Coming from 1.2? Run `composer require pharaonic/livewire-select2:^3.0`. Your markup keeps working; the documentation lists what changed.
+Coming from 1.2? Run `composer require pharaonic/livewire-select2:^4.0`. Your markup keeps working; the documentation lists what changed.
 
 ## Usage
 

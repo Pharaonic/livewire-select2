@@ -5,7 +5,7 @@
 | Attribute | Value |
 | --- | --- |
 | `data-pharaonic` | `select2` |
-| `wire:model` | Property name or dot path; deferred unless `.live`, `.change`, `.lazy`, or `.blur` |
+| `wire:model` | Property name or dot path; deferred unless `.live` or `.lazy` |
 | `data-property` | Property name or dot path; wins over `wire:model` |
 | `data-tags` | `tags: true`; `"false"` turns it off |
 | `data-clear` | `allowClear: true`, with an empty placeholder when none is set; `"false"` turns it off |

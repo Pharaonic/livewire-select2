@@ -14,4 +14,4 @@ Security reports will be reviewed before public disclosure or release notes are 
 
 ## Livewire versions
 
-The 3.x line requires Livewire 3.8.3 or later, the first Livewire 3 release with no known advisory (CVE-2026-81887 affects 3.8.2 and earlier, CVE-2025-54068 releases before 3.6.4).
+The 4.x line requires Livewire 4.3.4 or later, the first Livewire 4 release with no known advisory (CVE-2026-81887 affects 4.3.3 and earlier).

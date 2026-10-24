@@ -15,6 +15,7 @@ One line per Livewire major, each on the Assistant line of the same major. `deve
 | 1.x | `>=1.3.0 <1.3.7 \|\| >=1.3.8 <2.0` | `^1.0` | `^7.30 \|\| ^8.75` | `>=7.4 <8.0` |
 | 2.x | `^2.12.7` | `^2.0` | `^7.30 \|\| ^8.75 \|\| ^9.0 \|\| ^10.0` | `>=8.0 <8.4` |
 | 3.x | `^3.8.3` | `^3.0` | `^10.15 \|\| ^11.0 \|\| ^12.0 \|\| ^13.0` | `>=8.1 <8.6` |
+| 4.x | `^4.3.4` | `^4.0` | `^10.16 \|\| ^11.0 \|\| ^12.0 \|\| ^13.0` | `>=8.1 <8.6` |
 
 Versions are `N.minor.patch`, where `N` is the Livewire major. Releases 1.0.0 to 1.2.0 predate this scheme and were built for Livewire 2; the 1.x line continues at 1.3.0 for Livewire 1, and 2.x is their successor.
 
@@ -42,19 +43,20 @@ Versions are `N.minor.patch`, where `N` is the Livewire major. Releases 1.0.0 to
 - Outside `wire:ignore`, Select2's own `MutationObserver` is disconnected: on Livewire 2 it reacts to the half-done morph and throws, and `update()` rebuilds the widget after the morph anyway.
 - 2.x: Livewire 2 supports Laravel 7 to 10, so one line covers four Laravel majors, each on the PHP minors it supports (8.0 to 8.3). `^2.12.7` keeps every Livewire release with CVE-2024-47823 out. `.defer` writes are deferred through the bridge; they settle only with the next request, so `wire:change` is fired right away instead of after the write. `composer check`, including Pint, runs on PHP 8.0 with the highest dependencies, which resolve Laravel 9.
 - 3.x: Livewire 3 supports Laravel 10 to 13 on PHP 8.1 to 8.5, with the Laravel floor at 10.15 (Livewire 3.8.3 calls `Stringable::isUrl()`) and `^3.8.3` keeping every known Livewire advisory out. Plain `wire:model` is deferred; `.live`, `.change`, `.lazy`, and `.blur` are live. `$this->id` throws on Livewire 3 components, so fixtures use `$this->getId()`. The script tags carry `data-navigate-once` for `wire:navigate`. One `composer.json` spans Pest 1 to Pest 4 like the Assistant's 3.x. `composer check` runs on PHP 8.1 with the highest dependencies.
+- 4.x: Livewire 4 supports Laravel 10 to 13 on PHP 8.1 to 8.5, with the 3.x tooling. The Laravel floor is 10.16 (Livewire 4 calls `BladeCompiler::prepareStringsForCompilationUsing()`), and `^4.3.4` keeps every known Livewire advisory out. Only `.live`, and `.lazy` without `.live`, send a request; `.change` and `.blur` alone only change when the browser-side value updates, so they are deferred. Livewire 4 posts to `/livewire-<hash>/update`, which the browser specs match by pattern.
 - The advisory ignore list covers the Laravel framework tree of the line, which no longer receives security fixes, following the Laravel DNA.
 
 ## Verification
 
 ```bash
-php8.1 composer check     # 3.x
+php8.1 composer check     # 3.x and 4.x
 php8.0 composer check     # 2.x
 php7.4 composer check     # 1.x, then: php8.1 tools/pint/vendor/bin/pint --test
 npm ci
 npm run check            # lint, unit tests, dist check, browser tests
 ```
 
-Browser tests start `php -S` on the fixture app in `tests/Browser` with real Livewire components, the real Assistant runtime from `vendor/`, and jQuery and Select2 from `node_modules/`. They use the lowest PHP of the line (`php7.4` on 1.x, `php8.0` on 2.x, `php8.1` on 3.x) unless `FIXTURE_PHP` names another PHP of the line. Set `BROWSERS=chromium,firefox,webkit` to choose browsers. Each open issue the line fixes has a browser test named after it. Run them for every Laravel major with lowest and highest dependencies, for example:
+Browser tests start `php -S` on the fixture app in `tests/Browser` with real Livewire components, the real Assistant runtime from `vendor/`, and jQuery and Select2 from `node_modules/`. They use the lowest PHP of the line (`php7.4` on 1.x, `php8.0` on 2.x, `php8.1` on 3.x and 4.x) unless `FIXTURE_PHP` names another PHP of the line. Set `BROWSERS=chromium,firefox,webkit` to choose browsers. Each open issue the line fixes has a browser test named after it. Run them for every Laravel major with lowest and highest dependencies, for example:
 
 ```bash
 php7.4 composer update --with laravel/framework:^7.30 --with orchestra/testbench:^5.20 --prefer-lowest
@@ -62,7 +64,7 @@ php7.4 composer update --with laravel/framework:^7.30 --with orchestra/testbench
 
 ## Branch notes
 
-`main` holds the 1.0 to 1.2 releases, which were built for Livewire 2, and is not developed further. The 1.x line was started from it for Livewire 1, 2.x from 1.x for Livewire 2, and 3.x from 2.x for Livewire 3. `develop` follows the newest line.
+`main` holds the 1.0 to 1.2 releases, which were built for Livewire 2, and is not developed further. The 1.x line was started from it for Livewire 1, 2.x from 1.x for Livewire 2, 3.x from 2.x for Livewire 3, and 4.x from 3.x for Livewire 4. `develop` follows the newest line.
 
 ## Documentation
 

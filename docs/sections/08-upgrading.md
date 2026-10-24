@@ -1,28 +1,28 @@
 ## Upgrading from 1.2
 
-Releases 1.0 to 1.2 were built for Livewire 2. On Livewire 3, this 3.x line replaces them. Your markup keeps working, with two Livewire 3 changes below.
+Releases 1.0 to 1.2 were built for Livewire 2. On Livewire 4, this 4.x line replaces them. Your markup keeps working, with two Livewire 4 changes below.
 
-### Install 3.x
+### Install 4.x
 
-A `^1.2` constraint never moves to 3.x, so require the new line:
+A `^1.2` constraint never moves to 4.x, so require the new line:
 
 ```bash title="Terminal" no-line-numbers
-composer require pharaonic/livewire-select2:^3.0
+composer require pharaonic/livewire-select2:^4.0
 ```
 
-| | 1.2 | 3.x |
+| | 1.2 | 4.x |
 | --- | --- | --- |
 | PHP | 7.2+ | 8.1 to 8.5 |
-| Livewire | 2.0+ | 3.8.3+ |
-| Laravel | through Livewire | 10.15+, 11, 12, 13 |
+| Livewire | 2.0+ | 4.3.4+ |
+| Laravel | through Livewire | 10.16+, 11, 12, 13 |
 
 Composer also installs `pharaonic/livewire-assistant`.
 
-### Two Livewire 3 Changes
+### Two Livewire 4 Changes
 
-**`$this->id` fails on Livewire 3.** Livewire 3 components have no `id` property, so `data-component-id="{{ $this->id }}"` throws "Property [$id] not found on component" and the page fails. Remove the attribute, because each select binds to the component around it, or write `{{ $this->getId() }}`.
+**`$this->id` fails on Livewire 4.** Livewire 4 components have no `id` property, so `data-component-id="{{ $this->id }}"` throws "Property [$id] not found on component" and the page fails. Remove the attribute, because each select binds to the component around it, or write `{{ $this->getId() }}`.
 
-**Plain `wire:model` is deferred.** On Livewire 3, `wire:model` sends the choice with the component's next request, and `wire:model.live` sends it right away. Add `.live` where the server must react at once, such as a select that loads dependent options. `wire:model.defer` is not a Livewire 3 modifier; it behaves like plain `wire:model`.
+**Plain `wire:model` is deferred.** On Livewire 4, `wire:model` sends the choice with the component's next request, and `wire:model.live` sends it right away. Add `.live` where the server must react at once, such as a select that loads dependent options. `wire:model.defer` is not a Livewire 4 modifier; it behaves like plain `wire:model`.
 
 ### Scripts
 
@@ -32,7 +32,7 @@ Use the directive in new code:
 {{-- 1.2 --}}
 <x-pharaonic-select2::scripts />
 
-{{-- 3.x --}}
+{{-- 4.x --}}
 @livewireSelect2Scripts
 ```
 
@@ -41,15 +41,15 @@ Use the directive in new code:
 If you published `vendor/pharaonic/pharaonic.select2.min.js` and load it with your own `<script>` tag, switch to the directive now: the file needs the Livewire Assistant runtime, which the directive loads. Then delete the published file.
 
 :::info Deprecated, not removed
-The scripts component, the publish tag, and the old JavaScript functions still work on every 3.x release. New code should use their replacements. They will be removed no earlier than a future major line.
+The scripts component, the publish tag, and the old JavaScript functions still work on every 4.x release. New code should use their replacements. They will be removed no earlier than a future major line.
 :::
 
 ### Attributes
 
-| 1.2 | 3.x |
+| 1.2 | 4.x |
 | --- | --- |
 | `data-component-id="{{ $this->id }}"` | Optional; `{{ $this->getId() }}` when you need it |
-| `wire:model` | Deferred on Livewire 3; `wire:model.live` sends right away |
+| `wire:model` | Deferred on Livewire 4; `wire:model.live` sends right away |
 | `data-tags`, `data-clear`, `data-search-off`, `data-parent` | Unchanged; `"false"` now turns one off, and `data-parent` without a value means the closest modal |
 | `data-placeholder`, `data-language`, `data-dir` | Unchanged: Select2 reads them itself |
 

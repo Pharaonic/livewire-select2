@@ -13,18 +13,23 @@ The property comes from `wire:model` on the select, or from `data-property`. Whe
 
 Both accept a property name or a dot path (`address.city`, `rows.2.product`).
 
-### Modifiers on Livewire 3
+### Modifiers on Livewire 4
 
-The modifiers mean what they mean in Livewire 3:
+The modifiers mean what they mean in Livewire 4:
 
 | Attribute | The choice is sent |
 | --- | --- |
 | `wire:model` | with the component's next request, such as a `wire:click` or a form submit |
-| `wire:model.live` | right away |
-| `wire:model.change`, `wire:model.lazy`, `wire:model.blur` | right away: a Select2 choice is the change, and Select2 never blurs the native select |
+| `wire:model.live`, `wire:model.live.blur`, `wire:model.live.change` | right away |
+| `wire:model.lazy` | right away: a Select2 choice is the change |
+| `wire:model.change`, `wire:model.blur` (without `.live`) | with the next request: on Livewire 4 they only decide when the browser-side value updates |
 | `wire:model.debounce.500ms` (without `.live`) | with the next request, like `wire:model` |
 
 Use `wire:model.live` when the server has to react to the choice at once, for example to load dependent options. `data-property` always sends right away.
+
+:::info Coming from Livewire 3
+On Livewire 3, `wire:model.change` and `wire:model.blur` sent the choice right away. On Livewire 4 they no longer send a request on their own; write `wire:model.live` (or `wire:model.live.blur`) instead.
+:::
 
 ### How Values Move
 
