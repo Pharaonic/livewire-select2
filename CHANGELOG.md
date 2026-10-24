@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## 1.3.2 - 2026-10-24
+
+### Changed
+
+- Documentation: keep labels and `@error` messages outside `wire:ignore`, which Livewire never updates; key rows by a stable id instead of their position; `data-theme` is listed among the Select2 attributes; and troubleshooting covers validation messages that do not show.
+
 ## 1.3.1 - 2026-10-24
 
 ### Fixed
