@@ -166,8 +166,8 @@ test('reports each missing function once', () => {
     assert.deepEqual(missing, ['flag', 'match'])
 })
 
-test('reads wire:model with Livewire 3 semantics: deferred unless live, lazy, change, or blur', () => {
-    const page = setup('<select id="a" wire:model="country"></select><select id="b" wire:model.live="a.b"></select><select id="c" wire:model.live.debounce.500ms="c"></select><select id="d" wire:model=" "></select><select id="e"></select><select id="f" wire:model.debounce.500ms="f"></select><select id="g" wire:model.lazy="g"></select><select id="h" wire:model.change="h"></select><select id="i" wire:model.blur="i"></select>')
+test('reads wire:model with Livewire 4 semantics: deferred unless live or lazy', () => {
+    const page = setup('<select id="a" wire:model="country"></select><select id="b" wire:model.live="a.b"></select><select id="c" wire:model.live.debounce.500ms="c"></select><select id="d" wire:model=" "></select><select id="e"></select><select id="f" wire:model.debounce.500ms="f"></select><select id="g" wire:model.lazy="g"></select><select id="h" wire:model.change="h"></select><select id="i" wire:model.blur="i"></select><select id="j" wire:model.live.blur="j"></select>')
     const binding = (id) => modelBinding(page.document.getElementById(id))
 
     assert.deepEqual(binding('a'), { property: 'country', live: false })
@@ -177,6 +177,7 @@ test('reads wire:model with Livewire 3 semantics: deferred unless live, lazy, ch
     assert.equal(binding('e'), null)
     assert.deepEqual(binding('f'), { property: 'f', live: false })
     assert.deepEqual(binding('g'), { property: 'g', live: true })
-    assert.deepEqual(binding('h'), { property: 'h', live: true })
-    assert.deepEqual(binding('i'), { property: 'i', live: true })
+    assert.deepEqual(binding('h'), { property: 'h', live: false })
+    assert.deepEqual(binding('i'), { property: 'i', live: false })
+    assert.deepEqual(binding('j'), { property: 'j', live: true })
 })
