@@ -4,9 +4,9 @@ Install the package with Composer, keep jQuery and Select2 on the page, and load
 
 ### Requirements
 
-- PHP 8.0 to 8.3, as supported by your Laravel version
-- Laravel 7.30+, 8.75+, 9, or 10
-- Livewire 2.12.7 or later (see [Compatibility](#compatibility))
+- PHP 8.1 to 8.5, as supported by your Laravel version
+- Laravel 10.15+, 11, 12, or 13
+- Livewire 3.8.3 or later (see [Compatibility](#compatibility))
 - jQuery and Select2 4, loaded by your application
 - A modern browser (ES2019); Internet Explorer is not supported
 
@@ -18,15 +18,8 @@ composer require pharaonic/livewire-select2
 
 Composer also installs `pharaonic/livewire-assistant`. Laravel discovers both service providers automatically. There is nothing to publish and no configuration file.
 
-:::warning Composer and unmaintained releases
-Livewire 2.12.7 and later have no known advisories, but every Laravel 7, 8, 9, and 10 release has security advisories that no release in its major fixes. Recent Composer versions refuse to install or update the framework until you allow them. If you accept the risk, allow these packages in your application's `composer.json`:
-
-| Laravel | Packages to allow |
-| --- | --- |
-| 7 | `laravel/framework`, `league/commonmark`, `league/flysystem` |
-| 8 | `laravel/framework`, `league/flysystem` |
-| 9 on PHP 8.0 | `laravel/framework`, `symfony/http-foundation`, `symfony/mailer`, `symfony/mime`, `symfony/process`, `symfony/routing`, `symfony/yaml` |
-| 9 on PHP 8.1+, 10 | `laravel/framework` |
+:::warning Composer and unmaintained Laravel versions
+Livewire 3.8.3 and later, Laravel 12, and Laravel 13 have no known advisories. Every Laravel 10 and 11 release has security advisories that no release in its major fixes, and recent Composer versions refuse to install or update them until you allow them. If you accept the risk, allow `laravel/framework`, the only package to allow on Laravel 10 or 11 with Livewire 3:
 
 ```bash title="Terminal" no-line-numbers
 composer config --json policy.advisories.ignore '{"laravel/framework": "No fixed release within this Laravel major."}'
@@ -37,7 +30,7 @@ Read [Compatibility](#compatibility) before accepting the risk.
 
 ### Load the Scripts
 
-Load jQuery and Select2 the way you already do, then add `@livewireSelect2Scripts` to your layout. It can go before or after `@livewireScripts`.
+Load jQuery and Select2 the way you already do, then add `@livewireSelect2Scripts` to your layout. It can go before or after Livewire's scripts, whether Livewire injects them automatically or you place `@livewireScripts` yourself.
 
 ```blade title="resources/views/layouts/app.blade.php"
 <head>
@@ -57,8 +50,8 @@ Load jQuery and Select2 the way you already do, then add `@livewireSelect2Script
 The directive renders two `<script>` tags: the Livewire Assistant runtime and this integration. Each is rendered once per page, even when layouts, partials, and `@livewireAssistantScripts` ask for it again.
 
 ```html no-copy
-<script src="https://example.com/pharaonic/livewire-assistant/assistant.js?id=3f9a1c2b7d4e5f60" data-turbo-eval="false" data-turbolinks-eval="false"></script>
-<script src="https://example.com/pharaonic/livewire-select2/select2.js?id=0d8eee40cb71f6d7" data-turbo-eval="false" data-turbolinks-eval="false"></script>
+<script src="https://example.com/pharaonic/livewire-assistant/assistant.js?id=3f9a1c2b7d4e5f60" data-navigate-once="true"></script>
+<script src="https://example.com/pharaonic/livewire-select2/select2.js?id=0d8eee40cb71f6d7" data-navigate-once="true"></script>
 ```
 
 jQuery and Select2 are read from `window.jQuery` when a select mounts, not when the script loads, so their order relative to the directive does not matter. If they are still missing when the page has finished loading, the select is reported as `mount-failed` with the `select2-missing` cause.

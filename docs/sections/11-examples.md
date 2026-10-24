@@ -6,10 +6,10 @@ The server fills the form when the modal opens; the select shows the saved value
 
 - ===Component
 
-  ```php title="app/Http/Livewire/Items.php"
+  ```php title="app/Livewire/Items.php"
   <?php
 
-  namespace App\Http\Livewire;
+  namespace App\Livewire;
 
   use App\Models\Category;
   use App\Models\Item;
@@ -58,11 +58,11 @@ The server fills the form when the modal opens; the select shows the saved value
 
 ### 2. Country and City
 
-The city list depends on the country. A new `wire:key` replaces the city select whenever the country changes.
+The city list depends on the country. The country select uses `wire:model.live`, so the server re-renders the cities at once, and a new `wire:key` replaces the city select whenever the country changes.
 
 - ===Component
 
-  ```php title="app/Http/Livewire/Address.php"
+  ```php title="app/Livewire/Address.php"
   public $country_id = '';
 
   public $city_id = '';
@@ -86,7 +86,7 @@ The city list depends on the country. A new `wire:key` replaces the city select 
   ```blade title="resources/views/livewire/address.blade.php"
   <div>
       <div wire:ignore>
-          <select data-pharaonic="select2" wire:model="country_id">
+          <select data-pharaonic="select2" wire:model.live="country_id">
               <option value="">Country</option>
               @foreach ($countries as $id => $name)
                   <option value="{{ $id }}">{{ $name }}</option>
@@ -112,7 +112,7 @@ Each row has its own select bound to its own array item.
 ```blade title="resources/views/livewire/invoice.blade.php"
 <div>
     @foreach ($rows as $index => $row)
-        <div wire:key="row-{{ $index }}">
+        <div wire:key="row-{{ $row['id'] }}">
             <div wire:ignore>
                 <select data-pharaonic="select2" wire:model="rows.{{ $index }}.product_id">
                     <option value="">Product</option>

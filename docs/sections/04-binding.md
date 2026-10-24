@@ -13,17 +13,18 @@ The property comes from `wire:model` on the select, or from `data-property`. Whe
 
 Both accept a property name or a dot path (`address.city`, `rows.2.product`).
 
-### Modifiers on Livewire 2
+### Modifiers on Livewire 3
 
-The modifiers mean what they mean in Livewire 2:
+The modifiers mean what they mean in Livewire 3:
 
 | Attribute | The choice is sent |
 | --- | --- |
-| `wire:model` | right away |
-| `wire:model.defer` | with the component's next request, such as a `wire:click` |
-| `wire:model.lazy`, `wire:model.debounce.500ms` | right away: a Select2 choice is a single change, so there is nothing to wait for |
+| `wire:model` | with the component's next request, such as a `wire:click` or a form submit |
+| `wire:model.live` | right away |
+| `wire:model.change`, `wire:model.lazy`, `wire:model.blur` | right away: a Select2 choice is the change, and Select2 never blurs the native select |
+| `wire:model.debounce.500ms` (without `.live`) | with the next request, like `wire:model` |
 
-`data-property` always sends right away.
+Use `wire:model.live` when the server has to react to the choice at once, for example to load dependent options. `data-property` always sends right away.
 
 ### How Values Move
 
@@ -68,9 +69,9 @@ With `data-tags`, users can type new values. Values in the property that have no
 </div>
 ```
 
-Select2 itself never fires the native `change` event; the package fires one for selects that have `wire:change`. With `wire:model.defer`, the deferred value travels in the `wire:change` request. Change handlers you attach with jQuery receive that event too, so on these selects they run twice. An `updated` hook in the component needs no event at all:
+Select2 itself never fires the native `change` event; the package fires one for selects that have `wire:change`. With plain `wire:model`, the deferred value travels in the `wire:change` request. Change handlers you attach with jQuery receive that event too, so on these selects they run twice. An `updated` hook in the component needs no event at all:
 
-```php title="app/Http/Livewire/Order.php"
+```php title="app/Livewire/Order.php"
 public function updatedCountry($value)
 {
     $this->city = null;

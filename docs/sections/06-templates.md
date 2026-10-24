@@ -72,6 +72,8 @@ Any other option keeps its JSON value. `ajax.url` stays a string.
 
 Call `define` after `@livewireSelect2Scripts` has loaded, for example in a deferred or module script, or import it from the ES module. A select that uses a name that is not defined yet waits: a console warning names the function once, and the select mounts as soon as `define` is called.
 
+With `wire:navigate`, Livewire runs every `<script>` in the new page's body again. A script that calls `define` again creates a new function under the same name, which throws `function-conflict`. Put such scripts in `<head>`, which Livewire merges instead of running again, give them `data-navigate-once`, or keep them in your bundle.
+
 ### Remote Data
 
 ```js title="resources/js/app.js"

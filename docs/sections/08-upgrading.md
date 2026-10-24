@@ -1,24 +1,28 @@
 ## Upgrading from 1.2
 
-Releases 1.0 to 1.2 supported Livewire 2. Their successor is this 2.x line. Your markup keeps working, attributes included.
+Releases 1.0 to 1.2 were built for Livewire 2. On Livewire 3, this 3.x line replaces them. Your markup keeps working, with two Livewire 3 changes below.
 
-### Install 2.x
+### Install 3.x
 
-A `^1.2` constraint never moves to 2.x, so require the new line:
+A `^1.2` constraint never moves to 3.x, so require the new line:
 
 ```bash title="Terminal" no-line-numbers
-composer require pharaonic/livewire-select2:^2.0
+composer require pharaonic/livewire-select2:^3.0
 ```
 
-The requirements are higher than 1.2's:
-
-| | 1.2 | 2.x |
+| | 1.2 | 3.x |
 | --- | --- | --- |
-| PHP | 7.2+ | 8.0 to 8.3 |
-| Livewire | 2.0+ | 2.12.7+ |
-| Laravel | through Livewire | 7.30+, 8.75+, 9, 10 |
+| PHP | 7.2+ | 8.1 to 8.5 |
+| Livewire | 2.0+ | 3.8.3+ |
+| Laravel | through Livewire | 10.15+, 11, 12, 13 |
 
 Composer also installs `pharaonic/livewire-assistant`.
+
+### Two Livewire 3 Changes
+
+**`$this->id` fails on Livewire 3.** Livewire 3 components have no `id` property, so `data-component-id="{{ $this->id }}"` throws "Property [$id] not found on component" and the page fails. Remove the attribute, because each select binds to the component around it, or write `{{ $this->getId() }}`.
+
+**Plain `wire:model` is deferred.** On Livewire 3, `wire:model` sends the choice with the component's next request, and `wire:model.live` sends it right away. Add `.live` where the server must react at once, such as a select that loads dependent options. `wire:model.defer` is not a Livewire 3 modifier; it behaves like plain `wire:model`.
 
 ### Scripts
 
@@ -28,7 +32,7 @@ Use the directive in new code:
 {{-- 1.2 --}}
 <x-pharaonic-select2::scripts />
 
-{{-- 2.x --}}
+{{-- 3.x --}}
 @livewireSelect2Scripts
 ```
 
@@ -37,15 +41,15 @@ Use the directive in new code:
 If you published `vendor/pharaonic/pharaonic.select2.min.js` and load it with your own `<script>` tag, switch to the directive now: the file needs the Livewire Assistant runtime, which the directive loads. Then delete the published file.
 
 :::info Deprecated, not removed
-The scripts component, the publish tag, and the old JavaScript functions still work on every 2.x release. New code should use their replacements. They will be removed no earlier than a future major line.
+The scripts component, the publish tag, and the old JavaScript functions still work on every 3.x release. New code should use their replacements. They will be removed no earlier than a future major line.
 :::
 
 ### Attributes
 
-| 1.2 | 2.x |
+| 1.2 | 3.x |
 | --- | --- |
-| `data-component-id="{{ $this->id }}"` | Optional: the closest component is used |
-| `wire:model`, `wire:model.defer` | Unchanged |
+| `data-component-id="{{ $this->id }}"` | Optional; `{{ $this->getId() }}` when you need it |
+| `wire:model` | Deferred on Livewire 3; `wire:model.live` sends right away |
 | `data-tags`, `data-clear`, `data-search-off`, `data-parent` | Unchanged; `"false"` now turns one off, and `data-parent` without a value means the closest modal |
 | `data-placeholder`, `data-language`, `data-dir` | Unchanged: Select2 reads them itself |
 
@@ -57,6 +61,7 @@ New: `data-options` for any other Select2 option, `data-template` and `Pharaonic
 - Selects that Livewire adds later mount by themselves; you no longer need to dispatch `pharaonic.select2.init`.
 - `wire:change` on the select now runs.
 - A select without `wire:model` no longer throws.
+- Widgets work across `wire:navigate` visits.
 - The script no longer needs a global `$`; it reads `window.jQuery`.
 - A select without a `class` no longer gets `form-select`. Add the class yourself if your theme needs it.
 - No placeholder is set unless you give one; 1.2 used "Select an option".

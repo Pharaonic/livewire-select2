@@ -5,7 +5,7 @@
 | Attribute | Value |
 | --- | --- |
 | `data-pharaonic` | `select2` |
-| `wire:model` | Property name or dot path; modifiers accepted |
+| `wire:model` | Property name or dot path; deferred unless `.live`, `.change`, `.lazy`, or `.blur` |
 | `data-property` | Property name or dot path; wins over `wire:model` |
 | `data-tags` | `tags: true`; `"false"` turns it off |
 | `data-clear` | `allowClear: true`, with an empty placeholder when none is set; `"false"` turns it off |
@@ -14,7 +14,7 @@
 | `data-template` | Named function for `templateResult` and `templateSelection` |
 | `wire:change` | Runs after the new value is written |
 | `data-options` | JSON object passed to Select2; overrides the shorthands |
-| `data-component-id` | Component id; empty or absent means the closest component |
+| `data-component-id` | Component id (`$this->getId()`); empty or absent means the closest component |
 
 On `<option>`:
 

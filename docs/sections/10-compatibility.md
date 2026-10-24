@@ -1,20 +1,20 @@
 ## Compatibility
 
-Every combination below installs with Composer and passes PHPStan and the PHP suite with lowest and highest dependencies. The real-browser suite (real Livewire 2 components, the real Livewire Assistant runtime, jQuery, and Select2, driven in real browsers) runs on the lowest PHP of each Laravel version, with lowest and highest dependencies.
+Every combination below installs with Composer and passes PHPStan and the PHP suite with lowest and highest dependencies. The real-browser suite (real Livewire 3 components, the real Livewire Assistant runtime, jQuery, and Select2, driven in real browsers) runs on the lowest PHP of each Laravel version, with lowest and highest dependencies.
 
 | Line | Livewire | Laravel | PHP | Browsers |
 | --- | --- | --- | --- | --- |
-| 2.x | 2.12.7+ | 7.30+ | 8.0 | Chromium, Firefox, WebKit |
-| 2.x | 2.12.7+ | 8.75+ | 8.0, 8.1 | Chromium, Firefox, WebKit |
-| 2.x | 2.12.7+ | 9 | 8.0, 8.1, 8.2 | Chromium, Firefox, WebKit |
-| 2.x | 2.12.7+ | 10 | 8.1, 8.2, 8.3 | Chromium, Firefox, WebKit |
+| 3.x | 3.8.3+ | 10.15+ | 8.1, 8.2, 8.3 | Chromium, Firefox, WebKit |
+| 3.x | 3.8.3+ | 11 | 8.2, 8.3, 8.4 | Chromium, Firefox, WebKit |
+| 3.x | 3.8.3+ | 12 | 8.2, 8.3, 8.4, 8.5 | Chromium, Firefox, WebKit |
+| 3.x | 3.8.3+ | 13 | 8.3, 8.4, 8.5 | Chromium, Firefox, WebKit |
 
-The browser suite uses jQuery 4 and Select2 4.1.
+The browser suite uses jQuery 4 and Select2 4.1. Laravel 10 starts at 10.15, because Livewire 3.8.3 renders its scripts with `Stringable::isUrl()`, which earlier Laravel 10 releases do not have.
 
-### Why Livewire 2.12.7
+### Why Livewire 3.8.3
 
-CVE-2024-47823 (remote code execution through file uploads) affects every Livewire release before 2.12.7. Requiring 2.12.7 keeps it out of every application that installs this line, and every Livewire 2 application can update to it within its major.
+Livewire 3.8.2 and earlier are affected by CVE-2026-81887 (DOM-based cross-site scripting during client-side state handling), and earlier releases by CVE-2025-54068 (remote command execution during property hydration) and CVE-2024-47823. Requiring 3.8.3 keeps every known Livewire advisory out of applications that install this line, and every Livewire 3 application can update to it within its major.
 
 :::warning Unmaintained Laravel versions
-Laravel 7, 8, 9, and 10 no longer receive security fixes. This line supports them because Livewire 2 does, but your application still carries their advisories. Plan your upgrade to a maintained Laravel version, which means Livewire 3 or later.
+Laravel 10 and 11 no longer receive security fixes. This line supports them because Livewire 3 does, but your application still carries their advisories. Plan your upgrade to Laravel 12 or 13.
 :::

@@ -1,5 +1,17 @@
 ## Troubleshooting
 
+### "Property [$id] not found on component"
+
+The view uses `{{ $this->id }}`, which Livewire 3 components do not have. Remove `data-component-id`, because the select binds to the component around it anyway, or use `{{ $this->getId() }}`.
+
+### The server gets the value only after I click something
+
+Plain `wire:model` is deferred on Livewire 3: the value travels with the component's next request. Use `wire:model.live` to send it right away.
+
+### A validation message does not show
+
+The `@error` is inside the `wire:ignore` block, which Livewire never updates. Move it outside, next to the block. See [Basic Usage](#basic-usage).
+
 ### Nothing happens and there is no widget
 
 Check the console. `select2-missing` means jQuery or Select2 is not on `window.jQuery`: load them, or with a bundler set `window.jQuery` and call `select2()` (see [Installation](#installation)). Make sure `@livewireSelect2Scripts` is on the page.
@@ -32,6 +44,6 @@ Add `data-parent` to the select. It opens the dropdown in the closest `.modal`, 
 
 Remove a `data-component-id` that names the parent, or leave the attribute out: the closest component is used.
 
-### Composer refuses to install or update Laravel 7, 8, 9, or 10
+### Composer refuses to install or update Laravel 10 or 11
 
 Those releases have unfixed security advisories. See the warning in [Installation](#installation).

@@ -2,6 +2,58 @@
 
 All notable changes to this project are documented here.
 
+## 3.0.0 - Unreleased
+
+The 3.x line for Livewire 3. Releases 1.0.0 to 1.2.0 were built for Livewire 2; Livewire 3 applications on them move here with `composer require pharaonic/livewire-select2:^3.0`. The documentation's upgrade guide lists every change.
+
+### Added
+
+- Built on `pharaonic/livewire-assistant`: selects are found, bound to their Livewire component, and cleaned up automatically, including selects Livewire adds later and pages reached with `wire:navigate`.
+- Two-way binding: server-side changes to the property now update the widget.
+- `wire:model` keeps Livewire 3's meaning: deferred by default, sent right away with `.live`, `.change`, `.lazy`, or `.blur`. `data-property` binds without `wire:model` and is always live.
+- `@livewireSelect2Scripts` Blade directive with an optional CSP nonce, rendering the Assistant runtime and the integration once per page; the tags carry `data-navigate-once`.
+- `pharaonic.livewire-select2.script` route serving the prebuilt script with content-hash cache busting.
+- `data-tags`, `data-clear`, `data-search-off`, and `data-parent` accept `"false"` to turn the option off.
+- `data-parent` without a value opens the dropdown in the closest modal or dialog (`.modal`, `<dialog>`, or `[role="dialog"]`).
+- `data-options`: a JSON object passed to Select2, for options without a shorthand.
+- `Pharaonic.select2.define(name, callback)`: named functions for function options such as `templateResult` and `templateSelection`. Selects wait until the names they use are defined.
+- `data-template="name"`: one named function for both `templateResult` and `templateSelection`.
+- `data-image` on an `<option>` shows an image before its text, without JavaScript.
+- Tag values without a matching option get one, so they show on the first render.
+- Selects outside `wire:ignore` are rebuilt after Livewire updates them, so options from the server show up.
+- ES module build for bundlers such as Vite.
+
+### Changed
+
+- `data-component-id` is optional. Without it, or when it is empty, the select binds to the component around it. On Livewire 3, write `{{ $this->getId() }}` when you need it; `{{ $this->id }}` fails.
+- jQuery and Select2 are read from `window.jQuery` when a select mounts, not from `$` when the script loads.
+- A select without a `class` no longer gets `form-select`.
+- No placeholder is set unless you give one. With `data-clear` and no placeholder, an empty one is used so the clear button still works.
+- Language and direction are no longer forced to `en` and `ltr`; Select2 takes them from the page unless `data-language` or `data-dir` is set.
+
+### Deprecated
+
+These keep working on every 3.x release.
+
+- `<x-pharaonic-select2::scripts />`: use `@livewireSelect2Scripts`.
+- The `livewire-select2` publish tag: the script is served by the package route.
+- `Pharaonic.Select2.init()`, `Pharaonic.Select2.load()`, and the `pharaonic.select2.init` and `pharaonic.select2.load` events: call `Pharaonic.assistant.scan(element)` for selects you add outside a Livewire update.
+
+### Fixed
+
+- Selects bind to the right component on Livewire 3, which the 1.2 script could not find.
+- Server-side values show after a modal opens, and the selection survives closing and reopening it.
+- `wire:change` on the select runs after the new value is written; with plain `wire:model`, its request carries the deferred value.
+- Selects that Livewire adds later, such as new rows, mount and bind.
+- A select without `wire:model` no longer throws.
+
+### Compatibility
+
+- Livewire 3.8.3 or later, the first Livewire 3 release with no known advisory.
+- Laravel 10.15+, 11, 12, and 13, each on the PHP minors it supports, from PHP 8.1 to 8.5. Laravel 10 starts at 10.15 because Livewire 3.8.3 needs `Stringable::isUrl()`.
+- jQuery and Select2 4 remain your application's dependencies.
+- Laravel 10 and 11 no longer receive security fixes.
+
 ## 2.0.0 - 2026-10-24
 
 The 2.x line for Livewire 2, and the successor of 1.2.0. A `^1.2` constraint never moves here: run `composer require pharaonic/livewire-select2:^2.0`. The documentation's upgrade guide lists every change.
