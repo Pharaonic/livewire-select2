@@ -38,7 +38,7 @@ test('applies server-originated values', async ({ page }) => {
 test('does not send a server value back to the server', async ({ page }) => {
     const requests = []
 
-    page.on('request', (request) => request.url().includes('/livewire/update') && requests.push(request.postData()))
+    page.on('request', (request) => /\/livewire[^/]*\/update/.test(request.url()) && requests.push(request.postData()))
 
     await page.click('#set-three')
     await expect.poll(() => widget(page, 'country')).toBe('3')

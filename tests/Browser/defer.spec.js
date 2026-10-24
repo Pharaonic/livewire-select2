@@ -4,7 +4,7 @@ import { pick, settle, value, widgets } from './helpers.js'
 const messages = (page) => {
     const sent = []
 
-    page.on('request', (request) => request.url().includes('/livewire/update') && sent.push(request.postDataJSON()))
+    page.on('request', (request) => /\/livewire[^/]*\/update/.test(request.url()) && sent.push(request.postDataJSON()))
 
     return sent
 }
