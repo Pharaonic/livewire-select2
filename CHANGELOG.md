@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## 2.0.1 - 2026-10-24
+
+### Changed
+
+- Documentation: keep labels and `@error` messages outside `wire:ignore`, which Livewire never updates; key rows by a stable id instead of their position; `data-theme` is listed among the Select2 attributes; and troubleshooting covers validation messages that do not show.
+
 ## 2.0.0 - 2026-10-24
 
 The 2.x line for Livewire 2, and the successor of 1.2.0. A `^1.2` constraint never moves here: run `composer require pharaonic/livewire-select2:^2.0`. The documentation's upgrade guide lists every change.
