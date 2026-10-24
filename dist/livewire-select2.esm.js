@@ -246,7 +246,11 @@ function createSelect2({ window: window2, functions, modelBinding: modelBinding2
     const jQuery = window2.jQuery;
     const $element = jQuery(element);
     withoutShorthandOverrides(element, () => $element.select2(options));
-    return { $element, instance: $element.data("select2") };
+    const instance = $element.data("select2");
+    if (element.closest("[wire\\:ignore]") === null && instance && instance._observer) {
+      instance._observer.disconnect();
+    }
+    return { $element, instance };
   }
   function isIntact(widget) {
     const element = widget.$element[0];
@@ -320,10 +324,15 @@ function createSelect2({ window: window2, functions, modelBinding: modelBinding2
         return;
       }
       const written = binding === null ? Promise.resolve() : write();
-      if (written !== null) {
-        written.then(notify, (error) => {
-          window2.console.error(`Select2 could not update "${binding.property}".`, error);
-        });
+      if (written === null) {
+        return;
+      }
+      const failed = (error) => window2.console.error(`Select2 could not update "${binding.property}".`, error);
+      if (binding !== null && !binding.live) {
+        written.catch(failed);
+        notify();
+      } else {
+        written.then(notify, failed);
       }
     });
     if (binding !== null) {
