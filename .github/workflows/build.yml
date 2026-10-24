@@ -18,7 +18,7 @@ concurrency:
 permissions:
   contents: read
 
-# The 3.x line follows Livewire 3, which supports several Laravel majors. Each
+# The 4.x line follows Livewire 4, which supports several Laravel majors. Each
 # major is listed with the PHP minors it supports, instead of reading one
 # ">=8.A <8.B" constraint.
 jobs:
@@ -29,9 +29,9 @@ jobs:
       fail-fast: false
       matrix:
         pair:
-          - { php: "8.1", laravel: "10", constraints: "--with laravel/framework:^10.15 --with orchestra/testbench:^8.0", browser: true }
-          - { php: "8.2", laravel: "10", constraints: "--with laravel/framework:^10.15 --with orchestra/testbench:^8.0", browser: false }
-          - { php: "8.3", laravel: "10", constraints: "--with laravel/framework:^10.15 --with orchestra/testbench:^8.0", browser: false }
+          - { php: "8.1", laravel: "10", constraints: "--with laravel/framework:^10.16 --with orchestra/testbench:^8.0", browser: true }
+          - { php: "8.2", laravel: "10", constraints: "--with laravel/framework:^10.16 --with orchestra/testbench:^8.0", browser: false }
+          - { php: "8.3", laravel: "10", constraints: "--with laravel/framework:^10.16 --with orchestra/testbench:^8.0", browser: false }
           - { php: "8.2", laravel: "11", constraints: "--with laravel/framework:^11.0 --with orchestra/testbench:^9.0", browser: true }
           - { php: "8.3", laravel: "11", constraints: "--with laravel/framework:^11.0 --with orchestra/testbench:^9.0", browser: false }
           - { php: "8.4", laravel: "11", constraints: "--with laravel/framework:^11.0 --with orchestra/testbench:^9.0", browser: false }
@@ -101,7 +101,7 @@ jobs:
           npm ci
           npx playwright install --with-deps chromium firefox webkit
 
-      # Real Livewire 3 components, real browsers.
+      # Real Livewire 4 components, real browsers.
       - name: Run browser tests
         if: env.BROWSER == 'true'
         env:
