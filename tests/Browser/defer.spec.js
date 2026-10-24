@@ -4,7 +4,7 @@ import { pick, settle, value, widgets } from './helpers.js'
 const messages = (page) => {
     const sent = []
 
-    page.on('request', (request) => request.url().includes('/livewire/message/') && sent.push(request.postDataJSON()))
+    page.on('request', (request) => request.url().includes('/livewire/update') && sent.push(request.postDataJSON()))
 
     return sent
 }
@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
     await widgets(page, 2)
 })
 
-test('wire:model.defer sends nothing until the next request', async ({ page }) => {
+test('plain wire:model sends nothing until the next request', async ({ page }) => {
     const sent = messages(page)
 
     await pick(page, 'draft', 'B')

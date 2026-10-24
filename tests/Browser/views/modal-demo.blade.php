@@ -3,7 +3,7 @@
 
     <div id="modal-edit" class="modal" style="display: {{ $open ? 'block' : 'none' }}">
         <div wire:ignore>
-            <select id="jenis" data-clear data-parent wire:model="jenis" class="form-select" data-pharaonic="select2" data-component-id="{{ $this->id }}">
+            <select id="jenis" data-clear data-parent wire:model.live="jenis" class="form-select" data-pharaonic="select2" data-component-id="{{ $this->getId() }}">
                 <option></option>
                 @foreach ($items as $id => $name)
                     <option value="{{ $id }}">{{ $name }}</option>

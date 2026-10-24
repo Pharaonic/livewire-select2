@@ -15,7 +15,7 @@ final class FixtureApplication
 {
     use CreatesApplication;
 
-    public const FIXTURES = ['select2', 'legacy', 'nested', 'modal', 'rows', 'dependent', 'templates', 'bundle', 'defer'];
+    public const FIXTURES = ['select2', 'legacy', 'nested', 'modal', 'rows', 'dependent', 'templates', 'bundle', 'defer', 'navigate-one', 'navigate-two'];
 
     /**
      * @param  \Illuminate\Foundation\Application  $app

@@ -4,7 +4,7 @@
     <output id="topics-value">{{ json_encode($topics) }}</output>
 
     <div wire:ignore>
-        <select id="draft" data-pharaonic="select2" wire:model.defer="draft">
+        <select id="draft" data-pharaonic="select2" wire:model="draft">
             <option value="">Choose</option>
             <option value="a">A</option>
             <option value="b">B</option>
@@ -12,7 +12,7 @@
     </div>
 
     <div wire:ignore>
-        <select id="topic" data-pharaonic="select2" wire:model.defer="topic" wire:change="topicChanged">
+        <select id="topic" data-pharaonic="select2" wire:model="topic" wire:change="topicChanged">
             <option value="">Choose</option>
             <option value="news">News</option>
             <option value="sport">Sport</option>
