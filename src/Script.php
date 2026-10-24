@@ -100,6 +100,7 @@ final class Script
         $src = URL::route(self::ROUTE, ['id' => self::version()]);
         $nonceAttribute = is_string($nonce) ? ' nonce="'.e($nonce).'"' : '';
 
-        return '<script src="'.e($src).'" data-turbo-eval="false" data-turbolinks-eval="false"'.$nonceAttribute.'></script>';
+        // wire:navigate re-runs body scripts unless they are marked to run once.
+        return '<script src="'.e($src).'" data-navigate-once="true"'.$nonceAttribute.'></script>';
     }
 }

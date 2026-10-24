@@ -21,12 +21,12 @@ function renderBlade(string $template, array $data = []): string
 
 function assistantTag(string $attributes = ''): string
 {
-    return '<script src="http://localhost/pharaonic/livewire-assistant/assistant.js?id='.AssistantScript::version().'" data-turbo-eval="false" data-turbolinks-eval="false"'.$attributes.'></script>';
+    return '<script src="http://localhost/pharaonic/livewire-assistant/assistant.js?id='.AssistantScript::version().'" data-navigate-once="true"'.$attributes.'></script>';
 }
 
 function select2Tag(string $attributes = ''): string
 {
-    return '<script src="http://localhost/pharaonic/livewire-select2/select2.js?id='.Script::version().'" data-turbo-eval="false" data-turbolinks-eval="false"'.$attributes.'></script>';
+    return '<script src="http://localhost/pharaonic/livewire-select2/select2.js?id='.Script::version().'" data-navigate-once="true"'.$attributes.'></script>';
 }
 
 it('renders the Assistant runtime and the integration', function () {
