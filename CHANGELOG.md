@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## 4.0.0 - Unreleased
+## 4.0.0 - 2026-10-24
 
 The 4.x line for Livewire 4. Releases 1.0.0 to 1.2.0 were built for Livewire 2; Livewire 4 applications move here with `composer require pharaonic/livewire-select2:^4.0`. The documentation's upgrade guide lists every change.
 
