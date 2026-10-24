@@ -8,7 +8,7 @@ Selects that appear after a Livewire update, such as a new row from `wire:click=
 
 ```blade title="resources/views/livewire/invoice.blade.php"
 @foreach ($rows as $index => $row)
-    <div wire:key="row-{{ $index }}">
+    <div wire:key="row-{{ $row['id'] }}">
         <div wire:ignore>
             <select data-pharaonic="select2" wire:model="rows.{{ $index }}.product">...</select>
         </div>
@@ -17,6 +17,10 @@ Selects that appear after a Livewire update, such as a new row from `wire:click=
 
 <button wire:click="addRow">Add row</button>
 ```
+
+:::tip Key rows by something stable
+Give each row a `wire:key` that stays with the row, such as an id, not its position. When a row in the middle is removed, position keys shift, and Livewire keeps the wrong widgets.
+:::
 
 ### Dependent Selects
 
