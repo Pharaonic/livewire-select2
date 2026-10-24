@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## 3.0.0 - Unreleased
+## 3.0.0 - 2026-10-24
 
 The 3.x line for Livewire 3. Releases 1.0.0 to 1.2.0 were built for Livewire 2; Livewire 3 applications on them move here with `composer require pharaonic/livewire-select2:^3.0`. The documentation's upgrade guide lists every change.
 
