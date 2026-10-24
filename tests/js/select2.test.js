@@ -65,12 +65,13 @@ test('binds wire:model when there is no data-property, and data-property wins', 
 
     a.$.val('2').trigger('change')
     b.$.val('1').trigger('change')
-    assert.deepEqual(a.component.writes, [['country', '2', { live: true }]])
+    // Plain wire:model is deferred on Livewire 3; data-property is always live.
+    assert.deepEqual(a.component.writes, [['country', '2', { live: false }]])
     assert.deepEqual(b.component.writes, [['chosen', '1', { live: true }]])
 })
 
 test('fires a native change for wire:change once the value is written, and ignores it itself', async () => {
-    const page = setup(`<select id="a" wire:model="country" wire:change="countryChanged">${COUNTRIES}</select><select id="b" wire:model="country">${COUNTRIES}</select>`, { modelBinding })
+    const page = setup(`<select id="a" wire:model.live="country" wire:change="countryChanged">${COUNTRIES}</select><select id="b" wire:model.live="country">${COUNTRIES}</select>`, { modelBinding })
     const a = page.mount('#a', { bound: component({ country: '1' }) })
     const b = page.mount('#b', { bound: component({ country: '1' }) })
     const native = { a: 0, b: 0 }
@@ -89,8 +90,8 @@ test('fires a native change for wire:change once the value is written, and ignor
     assert.deepEqual(a.component.writes, [['country', '2', { live: true }]])
 })
 
-test('writes wire:model.defer as a deferred update, and still fires wire:change after it', async () => {
-    const page = setup(`<select id="a" wire:model.defer="country" wire:change="countryChanged">${COUNTRIES}</select>`, { modelBinding })
+test('writes plain wire:model as a deferred update, and still fires wire:change after it', async () => {
+    const page = setup(`<select id="a" wire:model="country" wire:change="countryChanged">${COUNTRIES}</select>`, { modelBinding })
     const { element, $, component: bound } = page.mount('#a', { bound: component({ country: '1' }) })
     let native = 0
 
