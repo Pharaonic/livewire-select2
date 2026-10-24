@@ -112,7 +112,7 @@ Each row has its own select bound to its own array item.
 ```blade title="resources/views/livewire/invoice.blade.php"
 <div>
     @foreach ($rows as $index => $row)
-        <div wire:key="row-{{ $index }}">
+        <div wire:key="row-{{ $row['id'] }}">
             <div wire:ignore>
                 <select data-pharaonic="select2" wire:model="rows.{{ $index }}.product_id">
                     <option value="">Product</option>
