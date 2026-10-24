@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## 2.0.0 - Unreleased
+## 2.0.0 - 2026-10-24
 
 The 2.x line for Livewire 2, and the successor of 1.2.0. A `^1.2` constraint never moves here: run `composer require pharaonic/livewire-select2:^2.0`. The documentation's upgrade guide lists every change.
 
