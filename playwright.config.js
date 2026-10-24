@@ -19,6 +19,8 @@ export default defineConfig({
     retries: 0,
     workers: process.env.CI ? 2 : 4,
     reporter: process.env.CI ? [['list'], ['github']] : 'list',
+    // The first visit of a fixture compiles its views; on a busy CI runner that alone can take over five seconds.
+    expect: { timeout: 15_000 },
     use: {
         baseURL: `http://127.0.0.1:${port}`,
         trace: 'retain-on-failure',
@@ -28,7 +30,8 @@ export default defineConfig({
         use: { ...devices[{ chromium: 'Desktop Chrome', firefox: 'Desktop Firefox', webkit: 'Desktop Safari' }[name]] },
     })),
     webServer: {
-        command: `${php} -S 127.0.0.1:${port} tests/Browser/server.php`,
+        // Views are compiled before the workers start; see tests/Browser/compile.php.
+        command: `${php} tests/Browser/compile.php && ${php} -S 127.0.0.1:${port} tests/Browser/server.php`,
         url: `http://127.0.0.1:${port}/select2`,
         env: { PHP_CLI_SERVER_WORKERS: '8' },
         reuseExistingServer: !process.env.CI,
