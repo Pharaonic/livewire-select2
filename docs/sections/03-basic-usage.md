@@ -70,3 +70,17 @@ Without `wire:model` or `data-property`, the select becomes a Select2 widget tha
 :::tip Placeholders need an empty option
 Select2 shows the placeholder of a single select only when it has an empty `<option value="">`. Put one first.
 :::
+
+### Labels and Validation Messages
+
+Livewire never updates anything inside `wire:ignore`, including an `@error` message placed there. Keep labels and messages outside the ignored block, so they update with the component:
+
+```blade
+<label for="country">Country</label>
+
+<div wire:ignore>
+    <select id="country" data-pharaonic="select2" wire:model="country">...</select>
+</div>
+
+@error('country') <span class="text-danger">{{ $message }}</span> @enderror
+```

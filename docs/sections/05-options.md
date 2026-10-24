@@ -47,6 +47,7 @@ Select2 reads any option from a `data-*` attribute, with the option name in keba
 | `data-width="100%"` | `width` |
 | `data-language="ar"` | `language` |
 | `data-dir="rtl"` | `dir` |
+| `data-theme="bootstrap-5"` | `theme` (load the theme's stylesheet yourself) |
 | `data-minimum-input-length="2"` | `minimumInputLength` |
 | `data-maximum-selection-length="3"` | `maximumSelectionLength` |
 | `data-ajax--url="/api/countries"` | `ajax.url` |
