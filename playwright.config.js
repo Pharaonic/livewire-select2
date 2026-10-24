@@ -2,13 +2,13 @@ import { execFileSync } from 'node:child_process'
 import { defineConfig, devices } from '@playwright/test'
 
 const port = Number(process.env.FIXTURE_PORT ?? 8124)
-const php = process.env.FIXTURE_PHP ?? 'php8.0'
+const php = process.env.FIXTURE_PHP ?? 'php8.1'
 
-// The fixtures run on the PHP range of this line (composer.json "php": ">=8.0 <8.4").
+// The fixtures run on the PHP range of this line (composer.json "php": ">=8.1 <8.6").
 const phpVersion = execFileSync(php, ['-r', 'echo PHP_VERSION;'], { encoding: 'utf8' })
 
-if (!/^8\.[0-3]\./.test(phpVersion)) {
-    throw new Error(`The browser fixtures need PHP 8.0 to 8.3, but "${php}" is PHP ${phpVersion}. Set FIXTURE_PHP to such a PHP binary.`)
+if (!/^8\.[1-5]\./.test(phpVersion)) {
+    throw new Error(`The browser fixtures need PHP 8.1 to 8.5, but "${php}" is PHP ${phpVersion}. Set FIXTURE_PHP to such a PHP binary.`)
 }
 
 export default defineConfig({

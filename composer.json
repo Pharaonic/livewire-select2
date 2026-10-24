@@ -24,20 +24,20 @@
     "source": "https://github.com/Pharaonic/livewire-select2"
   },
   "require": {
-    "php": ">=8.0 <8.4",
-    "illuminate/http": "^7.30 || ^8.75 || ^9.0 || ^10.0",
-    "illuminate/routing": "^7.30 || ^8.75 || ^9.0 || ^10.0",
-    "illuminate/support": "^7.30 || ^8.75 || ^9.0 || ^10.0",
-    "illuminate/view": "^7.30 || ^8.75 || ^9.0 || ^10.0",
-    "livewire/livewire": "^2.12.7",
-    "pharaonic/livewire-assistant": "^2.0"
+    "php": ">=8.1 <8.6",
+    "illuminate/http": "^10.15 || ^11.0 || ^12.0 || ^13.0",
+    "illuminate/routing": "^10.15 || ^11.0 || ^12.0 || ^13.0",
+    "illuminate/support": "^10.15 || ^11.0 || ^12.0 || ^13.0",
+    "illuminate/view": "^10.15 || ^11.0 || ^12.0 || ^13.0",
+    "livewire/livewire": "^3.8.3",
+    "pharaonic/livewire-assistant": "^3.0"
   },
   "require-dev": {
-    "laravel/pint": "^1.5",
-    "orchestra/testbench": "^5.20 || ^6.25 || ^7.0 || ^8.0",
-    "pestphp/pest": "^1.23",
-    "phpstan/phpstan": "^2.1",
-    "phpunit/phpunit": "^9.6.33"
+    "laravel/pint": "^1.20",
+    "orchestra/testbench": "^8.0 || ^9.0 || ^10.0 || ^11.0",
+    "pestphp/pest": "^1.23 || ^3.8 || ^4.0",
+    "phpstan/phpstan": "^2.1.33",
+    "phpunit/phpunit": "^9.6.33 || ^11.5.50 || ^12.5.8"
   },
   "autoload": {
     "psr-4": {
@@ -81,15 +81,7 @@
       "advisories": {
         "block": false,
         "ignore": {
-          "laravel/framework": "No fixed release within Laravel 7, 8, 9, or 10; the application chooses the framework release.",
-          "league/commonmark": "No fixed release within Laravel 7; the application chooses the framework release.",
-          "league/flysystem": "No fixed release within Laravel 7 or 8; the application chooses the framework release.",
-          "symfony/http-foundation": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
-          "symfony/mailer": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
-          "symfony/mime": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
-          "symfony/process": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
-          "symfony/routing": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release.",
-          "symfony/yaml": "Symfony 6.0 through Laravel 9 on PHP 8.0; no fixed release there. The application chooses the framework release."
+          "laravel/framework": "No fixed release within Laravel 10 or 11; the application chooses the framework release."
         }
       }
     },
