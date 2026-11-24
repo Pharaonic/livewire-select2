@@ -17,12 +17,12 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@playwright/test": "1.65.0",
+    "@playwright/test": "1.65.1",
     "esbuild": "0.28.2",
     "eslint": "10.15.0",
     "globals": "17.14.0",
     "happy-dom": "21.0.4",
-    "jquery": "4.0.0",
+    "jquery": "4.1.0",
     "select2": "4.1.0",
     "turbolinks": "5.2.0"
   }
